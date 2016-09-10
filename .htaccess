@@ -1,0 +1,32 @@
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+
+	RewriteEngine on
+	RewriteBase /
+
+	## special case for the tumblr images:
+
+	# RewriteCond %{REQUEST_FILENAME} \.(jpg|png|gif)$
+	# RewriteCond $1 /(getTumblrImage)$
+	# RewriteCond $1 !^(index\.php)
+	# RewriteRule ^(.*)$ /index.php/$1 [L] 
+
+
+
+	### Handling asset files:
+	# RewriteCond %{REQUEST_FILENAME} !-f
+	# RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !\.(jpg|png|gif|css|js|ico)$
+
+	### Allow access to certain folders
+	RewriteCond $1 !^(images|icons|ci_assets)
+
+	### The MAIN rewrite, allowing explicit access to root files:
+	RewriteCond $1 !^(index\.php|getFeed\.php|robots\.txt|humans\.txt|crossdomain\.xml|favicon\.ico)
+	RewriteRule ^(.*)$ /index.php/$1 [L] 
+
+
+
+</IfModule>
