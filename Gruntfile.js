@@ -11,7 +11,7 @@ module.exports = function(grunt) {
           host: 'ftp.domeneshop.no',
           dest: '<%= serverpath %>',
           port: 21,
-          incrementalUpdates: false
+          incrementalUpdates: true
         },
         files: [
           {
