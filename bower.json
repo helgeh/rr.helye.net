@@ -1,0 +1,21 @@
+{
+  "name": "rr.helye.net",
+  "description": "",
+  "main": "index.php",
+  "authors": [
+    "Helge Hofstad <helge.hofstad@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/helgeh/rr.helye.net",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.3.x"
+  }
+}

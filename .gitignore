@@ -1,2 +1,3 @@
 .ftpauth
 node_modules/ 
+bower_components/
