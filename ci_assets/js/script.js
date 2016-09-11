@@ -2,8 +2,13 @@
   
   var player = new HjhPlayer();
 
-  function onFeedSelected(url) {
+  function onFeedSelected(event) {
+    event.preventDefault();
+    var url = $(this).attr('href');
+    $('.feed-item > div').removeClass('current');
+    $(this).parents('div').addClass('current');
     player.setSong(url);
+    return false;
   }
 
 
@@ -36,13 +41,7 @@
       // $('#downloadAll').removeClass('hidden');
 
       $('.listen-now').each(function() {
-        $(this).on('click', function(event) {
-          event.preventDefault();
-          event.stopPropagation();
-          var url = $(this).attr('href');
-          onFeedSelected(url);
-          return false;
-        });
+        $(this).on('click', onFeedSelected);
       });
 
       return false;
