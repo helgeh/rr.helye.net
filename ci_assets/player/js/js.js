@@ -1,9 +1,12 @@
 
 var HjhPlayer = (function() {
 
+	var self = this;
+
 	var FWD_SECONDS = 10;
 	var BCK_SECONDS = 5;
 
+	var song;
 	var container;
 	var cover;
 	var play;
@@ -20,10 +23,32 @@ var HjhPlayer = (function() {
 		stopElem 			: '#stop'
 	}
 
+	var evt = {
+		onTimeUpdate: _.noop
+	};
+
+	var throttledUpdate;
+
 
 	function initialize() {
 
 		song = new Audio();
+		console.log('initialize');
+
+		$(song).on('timeupdate', function(e) {
+			var curtime = parseInt(song.currentTime, 10);
+			seek.attr('value', curtime);
+			throttledUpdate();
+		});
+
+		$(song).on('canplay canplaythroug', function() {
+			$('.player').removeClass('isloading');
+			seek.attr('max', song.duration);
+		});
+
+		$(song).on('error', function(event) {
+			console.log("err", event);
+		});
 
 		play.live('click', function(e) {
 			e.preventDefault();
@@ -49,18 +74,20 @@ var HjhPlayer = (function() {
 		/* KEYBOARD BINDINGS */
 
 		window.onkeydown = function(e) {
-			console.log(e.which);
 			if (song.src === '')
 				return;
 			var key = e.key;
 			if (key == ' ') {
+				e.preventDefault();
 				togglePlay();
 			}
 			else if (key == 'ArrowRight') {
-				song.currentTime = song.currentTime + FWD_SECONDS;
+				e.preventDefault();
+				setTime(song.currentTime + FWD_SECONDS);
 			}
 			else if (key == 'ArrowLeft') {
-				song.currentTime = song.currentTime - BCK_SECONDS;
+				e.preventDefault();
+				setTime(song.currentTime - BCK_SECONDS);
 			}
 		};
 	}
@@ -74,10 +101,10 @@ var HjhPlayer = (function() {
 
 	function playSong() {
 		play.removeClass('play').addClass('pause');
-		if (song.currentTime == 0) {
+		if (stop.is(':hidden')) {
 			stop.fadeIn(300);
-			seek.attr('max', song.duration);
 		}
+		seek.attr('max', song.duration);
 		song.play();
 	}
 
@@ -96,10 +123,8 @@ var HjhPlayer = (function() {
 
 	function stopPlaying() {
 		song.pause();
-		song.currentTime = 0;
 		play.removeClass('pause').addClass('play');
 		stop.fadeOut(300);
-		seek.attr('value', 0);
 	}
 
 
@@ -115,25 +140,36 @@ var HjhPlayer = (function() {
 	}
 
 	function setSong(file) {
-		var $song = $(song);
 		stopPlaying();
-		$song.attr('src', file);
-		$song.load();
+		$(song).attr('src', file);
+		$(song).load();
 		$('.player').addClass('isloading');
-		$song.on('timeupdate',function (){
-			var curtime = parseInt(song.currentTime, 10);
-			seek.attr('value', curtime);
-		});
-		$song.on('canplay canplaythroug', function() {
-			$('.player').removeClass('isloading');
-		});
-		$song.on('error', function(event) {
-			console.log("err", event);
-		});
 	}
 
+	function getSong() {
+		return song.src;
+	}
+
+	function setTime(time) {
+		song.currentTime = time;
+		seek.attr('value', time);
+	}
+
+	function setUpdateFunc(func, wait) {
+		evt.onTimeUpdate = func;
+		throttledUpdate = _.throttle(doUpdate, wait || 5000, { 'trailing': false });
+	}
+
+	function doUpdate() {
+		evt.onTimeUpdate(song.currentTime);
+	}
+	throttledUpdate = _.throttle(doUpdate, 5000, { 'trailing': false });
+
 	var api = {
-		setSong: setSong
+		setSong: setSong,
+		getSong: getSong,
+		setTime: setTime,
+		onTimeUpdate: setUpdateFunc
 	};
 
 	Factory.prototype = api;

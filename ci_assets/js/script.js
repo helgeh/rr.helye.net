@@ -1,13 +1,16 @@
 ;(function($) {
-  
-  var player = new HjhPlayer();
 
   function onFeedSelected(event) {
-    event.preventDefault();
-    var url = $(this).attr('href');
+    var url, savedTime;
+    url = $(this).attr('href');
+    if (!songs.hasSong(url))
+      songs.addNewSong(url);
+    savedTime = songs.getCurrentTime(url);
+    player.setSong(url);
+    player.setTime(savedTime);
     $('.feed-item > div').removeClass('current');
     $(this).parents('div').addClass('current');
-    player.setSong(url);
+    event.preventDefault();
     return false;
   }
 
@@ -69,6 +72,45 @@
   //     });
   //   return false;
   // });
+
+  function Songs() {
+    this.songs = [];
+  }
+  Songs.prototype = {
+    addNewSong: function(url) {
+      this.songs.push({url: url, currentTime: 0, playCount: 0});
+    },
+    hasSong: function(url) {
+      return this.getSong(url) !== undefined;
+    },
+    getSong: function(url) {
+      return _.find(this.songs, {url: url});
+    },
+    setCurrentTime: function(url, time) {
+      this.getSong(url).currentTime = time;
+    },
+    getCurrentTime: function(url) {
+      return this.getSong(url).currentTime;
+    },
+    load: function() {
+      this.songs = JSON.parse(localStorage.getItem('songs')) || [];
+    },
+    save: function() {
+      localStorage.setItem('songs', JSON.stringify(this.songs));
+    }
+  };
+
+////////////////
+
+  var player = new HjhPlayer();
+
+  player.onTimeUpdate(function(time) {
+    songs.setCurrentTime(player.getSong(), time);
+    songs.save();
+  });
+
+  var songs = new Songs();
+  songs.load();
 
   getFeed('http://podkast.nrk.no/program/radioresepsjonen.rss');
 
