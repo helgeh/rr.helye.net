@@ -50,12 +50,12 @@ var HjhPlayer = (function() {
 			console.log("err", event);
 		});
 
-		play.live('click', function(e) {
+		play.on('click', function(e) {
 			e.preventDefault();
 			togglePlay();
 		});
 
-		mute.live('click', function(e) {
+		mute.on('click', function(e) {
 			e.preventDefault();
 			toggleMute();
 		});
@@ -142,7 +142,7 @@ var HjhPlayer = (function() {
 	function setSong(file) {
 		stopPlaying();
 		$(song).attr('src', file);
-		$(song).load();
+		$(song).trigger('load');
 		$('.player').addClass('isloading');
 	}
 

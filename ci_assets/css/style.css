@@ -129,6 +129,7 @@ section {
 #feedPosts ul {
   list-style:none;
   margin-left: 0;
+  padding-left: 0;
 }
 
 .feed-item {
@@ -172,8 +173,10 @@ section {
   padding-left: 5px;
 }
 
-.feed-buttons i {
+.feed-item span.glyphicon {
   margin-right: 2px;
+  color: darkcyan;
+  text-shadow: 1px 1px 1px rgb(136, 132, 132);
 }
 
 a:hover, a:active, a:focus {

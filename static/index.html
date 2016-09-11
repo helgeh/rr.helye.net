@@ -6,9 +6,8 @@
     <meta name="description" content="">
 
     <!-- Le styles -->
-    <link href="/ci_assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/ci_assets/css/style.css" rel="stylesheet">
-    <link href="/ci_assets/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="/ci_assets/player/css/style.css" rel="stylesheet">
     
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
@@ -19,9 +18,6 @@
     <link rel="shortcut icon" href="/favicon.ico?v=2">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- Le Script (just one, the rest after the footer) -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -31,11 +27,6 @@
 <body>
 
   <div class="container">
-
-    
-    
-  <div id="container">
-    
 
     <div>
       <hgroup>
@@ -48,13 +39,12 @@
 
     <div class="row">
 
-      <div class="span12">
+      <div class="col-lg-12">
         <div><a href="#" class="hidden" id="downloadAll">download all</a></div>
         <div id="feedPosts"></div>
       </div>
 
     </div>
-
 
   </div>
 
@@ -72,7 +62,9 @@
 
   </div>
 
-      <div class="footer" id="main-footer">
+  <div class="container footer" id="main-footer">
+    <div class="row">
+      <div class="col-lg-12">
         <p>
           © helge dot hofstad at gmail dot com 2016
           <span class="pull-right love">
@@ -81,19 +73,19 @@
             </a>
           </span>
         </p>
-      </div>
+        </div>
+    </div>
+  </div>
 
-    </div> <!-- /container -->
+  <!-- Le javascript -->
+  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="/ci_assets/js/vendor/jquery.multiDownload.js"></script>
+  <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/ci_assets/js/vendor/lodash.min.js"></script>
+  <script src="/ci_assets/player/js/js.js"></script>
+  <script src="/ci_assets/player/js/html5slider.js"></script>
+  <script src="/ci_assets/js/script.js"></script>
 
-    <!-- Le javascript -->
-    <script src="/ci_assets/js/vendor/jquery.multiDownload.js"></script>
-    <script>window.jQuery || document.write('<script src="/ci_assets/js/vendor/jquery-1.8.2.min.js"><\/script>')</script>
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
-    <script src="/ci_assets/js/vendor/lodash.min.js"></script>
-    <script src="/ci_assets/player/js/js.js"></script>
-    <script src="/ci_assets/player/js/html5slider.js"></script>
-    <script src="/ci_assets/js/script.js"></script>
-
-    <!-- no analytics -->
+  <!-- no analytics -->
 </body>
 </html>

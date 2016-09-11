@@ -49,8 +49,10 @@ function getHtmlAndYesItsStupid(rss) {
 
     var li = "<li class='feed-item'><div>"
     li += "<ul class='feed-buttons pull-right'>";
-    li += "<li><a href='" + href + "' download='" + filename + "' class='dl' title='Last ned'><i class='icon-arrow-down'></i>DL</a></li>";
-    li += "<li><a href='" + href + "' target='_blank' class='listen-now' title='Lytt'><i class='icon-headphones'></i>LSTN</a></li>";
+    li += "<li><a href='" + href + "' download='" + filename + "' class='dl' title='Last ned'>";
+    li += "<span class='glyphicon glyphicon-arrow-down'></span></a></li>";
+    li += "<li><a href='" + href + "' target='_blank' class='listen-now' title='Lytt'>";
+    li += "<span class='glyphicon glyphicon-headphones'></span></a></li>";
     li += "</ul>";
     li += "<h5>" + title + "</h5>";
     li += "<p>" + desc + "</p>";
@@ -65,6 +67,7 @@ function getHtmlAndYesItsStupid(rss) {
 
 app.use(serveStatic(path.join(__dirname, './../static')));
 app.use('/ci_assets', serveStatic(path.join(__dirname, './../ci_assets')));
+app.use('/bower_components', serveStatic(path.join(__dirname, './../bower_components')));
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
