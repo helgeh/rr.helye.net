@@ -1,6 +1,9 @@
 
 var HjhPlayer = (function() {
 
+	var FWD_SECONDS = 10;
+	var BCK_SECONDS = 5;
+
 	var container;
 	var cover;
 	var play;
@@ -24,10 +27,7 @@ var HjhPlayer = (function() {
 
 		play.live('click', function(e) {
 			e.preventDefault();
-			if (song.paused)
-				playSong();
-			else
-				pauseSong();
+			togglePlay();
 		});
 
 		mute.live('click', function(e) {
@@ -44,6 +44,32 @@ var HjhPlayer = (function() {
 			song.currentTime = $(this).val();
 			seek.attr('max', song.duration);
 		});
+
+
+		/* KEYBOARD BINDINGS */
+
+		window.onkeydown = function(e) {
+			console.log(e.which);
+			if (song.src === '')
+				return;
+			var key = e.key;
+			if (key == ' ') {
+				togglePlay();
+			}
+			else if (key == 'ArrowRight') {
+				song.currentTime = song.currentTime + FWD_SECONDS;
+			}
+			else if (key == 'ArrowLeft') {
+				song.currentTime = song.currentTime - BCK_SECONDS;
+			}
+		};
+	}
+
+	function togglePlay() {
+		if (song.paused)
+			playSong();
+		else
+			pauseSong();
 	}
 
 	function playSong() {
