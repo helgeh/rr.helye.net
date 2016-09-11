@@ -9,7 +9,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "express": "^4.14.0",
     "grunt": "^1.0.1",
-    "grunt-ftp-push": "^1.1.1"
+    "grunt-ftp-push": "^1.1.1",
+    "parse-rss": "^1.0.3",
+    "serve-static": "^1.11.1"
   }
 }
