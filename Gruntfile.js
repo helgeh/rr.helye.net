@@ -21,6 +21,8 @@ module.exports = function(grunt) {
               '**/*',
               '!bower_components/**',
               '!node_modules/**',
+              '!server/**',
+              '!static/**',
               '!.git{,**/}*',
               '!Gruntfile.js',
               '!README.md'
